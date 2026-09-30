@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "plugins": ["react", "react-perf", "promise", "import"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "19",
+      "jsxRuntime": "automatic"
+    }
+  },
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "no-await-in-loop": "off",
+    "import/no-unassigned-import": [
+      "error",
+      {
+        "allow": ["**/*.css", "**/@testing-library/**"]
+      }
+    ],
+    "react-perf/jsx-no-new-function-as-prop": "off",
+    "react/react-in-jsx-scope": "off"
+  },
+  "ignorePatterns": ["dist", "coverage", "node_modules"]
+}
