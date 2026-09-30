@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme static {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --chat-background-background-step-1: #99d5d7;
+  --chat-background-background-step-2: #80bcff;
+  --bubbles-system-step-1: #ffffffa3;
+  --bubbles-system-step-2: #ffffffe0;
+
+  --color-accent: #007aff;
+  --color-accent-soft: #e3f0ff;
+  --color-accent-deep: #0059c9;
+  --color-ink: #060708;
+  --color-ink-soft: rgba(6, 7, 8, 0.84);
+  --color-ink-muted: #818c99;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f5f6f7;
+  --color-field: #0909090d;
+  --color-border: #e7e8ea;
+  --color-danger: #e64646;
+
+  --radius-card: 1.5rem;
+  --radius-field: 1rem;
+  --radius-button: 1.25rem;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background-color: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.login-backdrop {
+  background: linear-gradient(
+    28deg,
+    var(--chat-background-background-step-1) 8.03%,
+    var(--chat-background-background-step-2) 91.51%
+  );
+}
+
+.login-card {
+  background: linear-gradient(180deg, var(--bubbles-system-step-1), var(--bubbles-system-step-2));
+  -webkit-backdrop-filter: blur(25px);
+  backdrop-filter: blur(25px);
+}
+
+input:-internal-autofill-selected {
+  background: linear-gradient(180deg, var(--bubbles-system-step-1), var(--bubbles-system-step-2));
+}
