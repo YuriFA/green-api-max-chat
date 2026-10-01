@@ -27,3 +27,13 @@ export const ChatSchema = z.object({
 });
 
 export type Chat = z.infer<typeof ChatSchema>;
+
+// ── StoredChats ───────────────────────────────────────────────────────────────
+
+export const StoredChatsSchema = z.object({
+  chats: z.array(ChatSchema),
+  messagesByChatId: z.record(z.string(), z.array(MessageSchema)),
+  activeChatId: z.string().nullable(),
+});
+
+export type StoredChats = z.infer<typeof StoredChatsSchema>;

@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import type { Message, RemoteMessageInput } from "./message";
 import type { Chat } from "./schemas";
+import { loadStoredChats, saveStoredChats } from "./stored-chats";
 
 export type { Chat };
 
@@ -30,10 +31,12 @@ const mapMessage = (
     ]),
   );
 
+const storedChats = loadStoredChats();
+
 export const useChatStore = create<ChatState>()((set) => ({
-  chats: [],
-  messagesByChatId: {},
-  activeChatId: null,
+  chats: storedChats?.chats ?? [],
+  messagesByChatId: storedChats?.messagesByChatId ?? {},
+  activeChatId: storedChats?.activeChatId ?? null,
 
   resetChats: () => set({ chats: [], messagesByChatId: {}, activeChatId: null }),
 
@@ -107,3 +110,11 @@ export const useChatStore = create<ChatState>()((set) => ({
       }),
     })),
 }));
+
+useChatStore.subscribe((state) => {
+  saveStoredChats({
+    chats: state.chats,
+    messagesByChatId: state.messagesByChatId,
+    activeChatId: state.activeChatId,
+  });
+});
