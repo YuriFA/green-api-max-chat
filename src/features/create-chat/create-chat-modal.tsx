@@ -70,11 +70,11 @@ export const CreateChatModal = ({ onClose }: CreateChatModalProps) => {
       role="dialog"
       aria-modal="true"
       aria-label="Новый чат"
-      className="fixed inset-0 z-10 flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-10 flex justify-center overflow-y-auto bg-black/40 p-4"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-100 rounded-card bg-surface p-6 shadow-2xl"
+        className="my-auto w-full max-w-100 rounded-card bg-surface p-6 shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between">

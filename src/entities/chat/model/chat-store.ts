@@ -12,6 +12,7 @@ interface ChatState {
   activeChatId: string | null;
   createChat: (chat: Omit<Chat, "createdAt">) => void;
   selectChat: (chatId: string) => void;
+  closeChat: () => void;
   upsertRemoteMessage: (chatId: string, input: RemoteMessageInput) => void;
   addPendingMessage: (chatId: string, text: string, timestamp: number) => string;
   confirmMessage: (clientId: string, idMessage: string) => void;
@@ -53,6 +54,8 @@ export const useChatStore = create<ChatState>()((set) => ({
     }),
 
   selectChat: (chatId) => set({ activeChatId: chatId }),
+
+  closeChat: () => set({ activeChatId: null }),
 
   upsertRemoteMessage: (chatId, input) =>
     set((state) => {

@@ -9,6 +9,7 @@ import { useChatStore, type Chat } from "@/entities/chat/model/chat-store";
 import type { Message } from "@/entities/chat/model/message";
 import { IconButton } from "@/shared/ui/button";
 import { IconLogout, IconPlus } from "@/shared/ui/icons";
+import { cn } from "@/shared/lib/cn";
 
 import { ChatListItem } from "./chat-list-item";
 
@@ -45,11 +46,16 @@ export const ChatList = ({ onLogout }: { onLogout: () => void }) => {
   );
 
   return (
-    <aside className="flex h-dvh w-90 shrink-0 flex-col border-r border-border bg-surface">
+    <aside
+      className={cn("h-dvh w-full flex-col border-r border-border bg-surface md:w-90 md:shrink-0", {
+        flex: activeChatId === null,
+        "hidden md:flex": activeChatId !== null,
+      })}
+    >
       <header className="flex h-14 shrink-0 items-center justify-between pl-6 pr-3">
         <h1 className="text-lg font-semibold">Чаты</h1>
         <IconButton
-          className="text-accent hover:bg-accent-soft"
+          className="size-11 text-accent hover:bg-accent-soft md:size-10"
           label="Новый чат"
           onClick={() => setIsCreateOpen(true)}
         >
@@ -81,7 +87,7 @@ export const ChatList = ({ onLogout }: { onLogout: () => void }) => {
           {polling.errorMessage ?? statusText[polling.status]}
         </span>
         <button
-          className="flex items-center gap-1.5 rounded-lg px-2 py-1 text-[13px] text-ink-muted transition-colors hover:bg-field hover:text-ink"
+          className="flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-[13px] text-ink-muted transition-colors hover:bg-field hover:text-ink"
           type="button"
           onClick={onLogout}
         >

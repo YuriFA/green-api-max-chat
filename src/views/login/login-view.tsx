@@ -8,8 +8,8 @@ interface LoginViewProps {
 }
 
 export const LoginView = ({ onSubmit }: LoginViewProps) => (
-  <div className="login-backdrop flex h-dvh items-center justify-center p-4">
-    <div className="login-card w-full max-w-105 rounded-card p-8 shadow-2xl">
+  <div className="login-backdrop flex h-dvh justify-center overflow-y-auto p-4">
+    <div className="login-card my-auto w-full max-w-105 rounded-card p-6 shadow-2xl md:p-8">
       <div className="flex flex-col items-center text-center">
         <div className="flex items-center gap-1">
           <Logo className="scale-75" />
