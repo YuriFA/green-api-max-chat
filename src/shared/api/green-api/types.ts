@@ -59,6 +59,9 @@ export interface NotificationBody {
   typeWebhook: string;
   timestamp: number;
   idMessage: string;
+  chatId?: string;
+  status?: string;
+  description?: string;
   senderData?: NotificationSenderData;
   messageData?: NotificationMessageData;
 }

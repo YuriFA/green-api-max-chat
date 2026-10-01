@@ -3,7 +3,7 @@ import { z } from "zod";
 // ── Message ──────────────────────────────────────────────────────────────────
 
 export const MessageDirectionSchema = z.enum(["in", "out"]);
-export const MessageStatusSchema = z.enum(["pending", "sent", "failed"]);
+export const MessageStatusSchema = z.enum(["pending", "sent", "delivered", "read", "failed"]);
 
 export const MessageSchema = z.object({
   id: z.string(),

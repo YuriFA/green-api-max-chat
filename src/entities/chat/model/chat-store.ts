@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { Message, RemoteMessageInput } from "./message";
+import type { Message, MessageStatus, RemoteMessageInput } from "./message";
 import type { Chat, ChatContact } from "./schemas";
 import { loadStoredChats, saveStoredChats } from "./stored-chats";
 
@@ -14,11 +14,20 @@ interface ChatState {
   selectChat: (chatId: string) => void;
   closeChat: () => void;
   upsertRemoteMessage: (chatId: string, input: RemoteMessageInput) => void;
+  applyMessageStatus: (chatId: string, idMessage: string, status: MessageStatus) => void;
   addPendingMessage: (chatId: string, text: string, timestamp: number) => string;
   confirmMessage: (clientId: string, idMessage: string) => void;
   failMessage: (clientId: string) => void;
   resetChats: () => void;
 }
+
+const STATUS_RANK: Record<MessageStatus, number> = {
+  pending: 0,
+  sent: 1,
+  failed: 2,
+  delivered: 3,
+  read: 4,
+};
 
 const mapMessage = (
   messagesByChatId: Record<string, Message[]>,
@@ -72,6 +81,23 @@ export const useChatStore = create<ChatState>()((set) => ({
         messagesByChatId: {
           ...state.messagesByChatId,
           [chatId]: [...messages, message],
+        },
+      };
+    }),
+
+  applyMessageStatus: (chatId, idMessage, status) =>
+    set((state) => {
+      const messages = state.messagesByChatId[chatId];
+      const target = messages?.find((message) => message.idMessage === idMessage);
+      if (!target || STATUS_RANK[status] <= STATUS_RANK[target.status]) {
+        return state;
+      }
+      return {
+        messagesByChatId: {
+          ...state.messagesByChatId,
+          [chatId]: messages.map((message) =>
+            message.idMessage === idMessage ? { ...message, status } : message,
+          ),
         },
       };
     }),

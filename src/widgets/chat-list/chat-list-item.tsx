@@ -1,8 +1,9 @@
 import type { Message } from "@/entities/chat/model/message";
 import type { Chat } from "@/entities/chat/model/chat-store";
-import { Avatar } from "@/shared/ui/avatar";
+import { MessageStatusTicks } from "@/entities/chat/ui/message-status";
 import { cn } from "@/shared/lib/cn";
 import { formatTime } from "@/shared/lib/format-time";
+import { Avatar } from "@/shared/ui/avatar";
 
 interface ChatListItemProps {
   chat: Chat;
@@ -30,7 +31,10 @@ export const ChatListItem = ({ chat, lastMessage, isActive, onSelect }: ChatList
         <span className="flex items-baseline justify-between gap-2">
           <span className="truncate text-[15px] font-medium text-ink">{displayName}</span>
           {lastMessage && (
-            <span className="shrink-0 text-xs text-ink-muted">
+            <span className="flex shrink-0 items-center gap-1 text-xs text-ink-muted">
+              {lastMessage.direction === "out" && (
+                <MessageStatusTicks status={lastMessage.status} />
+              )}
               {formatTime(lastMessage.timestamp)}
             </span>
           )}

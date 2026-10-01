@@ -61,6 +61,53 @@ export const IconChevronLeft = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const IconCheck = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="m5 13 4 4L19 7" />
+  </svg>
+);
+
+export const IconCheckDouble = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="m2 13 3.5 3.5L14 8" />
+    <path d="m8.5 13 3.5 3.5L20.5 8" />
+  </svg>
+);
+
+export const IconClock = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    {...props}
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 6v6l4 2" />
+  </svg>
+);
+
 export const IconUser = (props: SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 24 24"

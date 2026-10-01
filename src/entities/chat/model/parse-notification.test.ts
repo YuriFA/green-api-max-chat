@@ -31,6 +31,22 @@ it("parses an incoming text message", () => {
   });
 });
 
+it("parses an outgoing status notification", () => {
+  const body: NotificationBody = {
+    typeWebhook: "outgoingMessageStatus",
+    chatId: "10000000",
+    timestamp: 1763115112,
+    idMessage: "msg1",
+    status: "delivered",
+  };
+
+  expect(parseNotification(body)).toEqual({
+    kind: "status",
+    chatId: "10000000",
+    idMessage: "msg1",
+    status: "delivered",
+  });
+});
 
 it("returns null for non-text messages", () => {
   const body: NotificationBody = {

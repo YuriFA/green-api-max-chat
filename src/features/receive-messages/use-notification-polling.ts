@@ -48,6 +48,11 @@ const applyNotification = (parsed: ParsedNotification) => {
     return;
   }
 
+  if (parsed.kind === "status") {
+    store.applyMessageStatus(parsed.chatId, parsed.idMessage, parsed.status);
+    return;
+  }
+
   ensureChatExists(parsed.chatId, null, null);
 
   store.upsertRemoteMessage(parsed.chatId, {

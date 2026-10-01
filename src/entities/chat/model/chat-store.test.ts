@@ -14,8 +14,8 @@ it("creates a chat and selects it", () => {
   expect(state.activeChatId).toBe("10000000");
 });
 
-it("adds a pending message and confirms it", () => {
-  const { addPendingMessage, confirmMessage } = useChatStore.getState();
+it("adds a pending message, confirms it, and advances status to read", () => {
+  const { addPendingMessage, confirmMessage, applyMessageStatus } = useChatStore.getState();
   const clientId = addPendingMessage("1", "привет", Date.now());
   expect(useChatStore.getState().messagesByChatId["1"][0].status).toBe("pending");
 
@@ -24,6 +24,18 @@ it("adds a pending message and confirms it", () => {
     idMessage: "m1",
     status: "sent",
   });
+
+  applyMessageStatus("1", "m1", "delivered");
+  applyMessageStatus("1", "m1", "read");
+  expect(useChatStore.getState().messagesByChatId["1"][0].status).toBe("read");
+});
+
+it("does not downgrade a read message to delivered", () => {
+  const { upsertRemoteMessage, applyMessageStatus } = useChatStore.getState();
+  upsertRemoteMessage("1", { idMessage: "m1", direction: "out", text: "hi", timestamp: 1 });
+  applyMessageStatus("1", "m1", "read");
+  applyMessageStatus("1", "m1", "delivered");
+  expect(useChatStore.getState().messagesByChatId["1"][0].status).toBe("read");
 });
 
 it("deduplicates redelivered remote messages by idMessage", () => {

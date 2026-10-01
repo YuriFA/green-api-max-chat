@@ -22,6 +22,12 @@ const AUTO_REPLY_DELAY_MS = 2000;
 const POLL_INTERVAL_MS = 100;
 const CONTACT_INFO_DELAY_MS = 300;
 
+const OUTGOING_STATUS_CHAIN = [
+  { status: "sent", delayMs: 600 },
+  { status: "delivered", delayMs: 1600 },
+  { status: "read", delayMs: 3200 },
+] as const;
+
 const DEMO_CONTACT_NAMES = [
   "Алиса Загорская",
   "Марк Ветров",
@@ -56,6 +62,7 @@ export class MockGreenApiClient implements GreenApiClient {
       },
     });
     this.scheduleAutoReply(request);
+    this.scheduleOutgoingStatuses(request.chatId, idMessage);
     return { idMessage };
   }
 
@@ -101,6 +108,23 @@ export class MockGreenApiClient implements GreenApiClient {
 
   async deleteNotification(_receiptId: number): Promise<DeleteNotificationResponse> {
     return { result: true, reason: "" };
+  }
+
+  private scheduleOutgoingStatuses(chatId: string, idMessage: string): void {
+    for (const { status, delayMs } of OUTGOING_STATUS_CHAIN) {
+      setTimeout(() => {
+        this.queue.push({
+          receiptId: this.receiptSeq++,
+          body: {
+            typeWebhook: "outgoingMessageStatus",
+            chatId,
+            timestamp: Math.floor(Date.now() / 1000),
+            idMessage,
+            status,
+          },
+        });
+      }, delayMs);
+    }
   }
 
   private scheduleAutoReply(request: SendMessageRequest): void {
