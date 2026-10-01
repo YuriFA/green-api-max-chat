@@ -24,6 +24,21 @@ export type CheckAccountOutcome =
   | { kind: "not-found" }
   | { kind: "unavailable"; reason: string };
 
+export interface GetContactInfoRequest {
+  chatId: string;
+}
+
+export interface GetContactInfoResponse {
+  avatar?: string;
+  name?: string;
+  contactName?: string;
+  chatId?: string;
+  chatType?: string;
+  lastSeen?: number | null;
+  phoneNumber?: PhoneNumber;
+  phoneNumberTimestamp?: number;
+}
+
 export interface NotificationSenderData {
   chatId: string;
   chatName?: string;

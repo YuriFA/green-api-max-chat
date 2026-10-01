@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
 import type { Message, RemoteMessageInput } from "./message";
-import type { Chat } from "./schemas";
+import type { Chat, ChatContact } from "./schemas";
 import { loadStoredChats, saveStoredChats } from "./stored-chats";
 
-export type { Chat };
+export type { Chat, ChatContact };
 
 interface ChatState {
   chats: Chat[];

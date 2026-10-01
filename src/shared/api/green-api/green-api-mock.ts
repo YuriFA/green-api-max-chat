@@ -4,6 +4,8 @@ import type {
   CheckAccountOutcome,
   CheckAccountRequest,
   DeleteNotificationResponse,
+  GetContactInfoRequest,
+  GetContactInfoResponse,
   ReceiveNotificationResponse,
   SendMessageRequest,
   SendMessageResponse,
@@ -18,6 +20,16 @@ const abortError = (): DOMException => new DOMException("The operation was abort
 
 const AUTO_REPLY_DELAY_MS = 2000;
 const POLL_INTERVAL_MS = 100;
+const CONTACT_INFO_DELAY_MS = 300;
+
+const DEMO_CONTACT_NAMES = [
+  "Алиса Загорская",
+  "Марк Ветров",
+  "Полина Ким",
+  "Тимур Соколов",
+  "Вера Ланская",
+  "Егор Шумилов",
+] as const;
 
 export class MockGreenApiClient implements GreenApiClient {
   private receiptSeq = 1;
@@ -55,6 +67,21 @@ export class MockGreenApiClient implements GreenApiClient {
     return {
       kind: "exists",
       chatId: `mock-${request.phoneNumber.slice(-8)}`,
+    };
+  }
+
+  async getContactInfo(request: GetContactInfoRequest): Promise<GetContactInfoResponse> {
+    await delay(CONTACT_INFO_DELAY_MS);
+    const digits = request.chatId.replace(/\D/g, "");
+    const name = DEMO_CONTACT_NAMES[Number(digits.slice(-1)) % DEMO_CONTACT_NAMES.length];
+    return {
+      avatar: "",
+      name,
+      contactName: name,
+      chatId: request.chatId,
+      chatType: "user",
+      lastSeen: Math.floor(Date.now() / 1000),
+      phoneNumber: digits.slice(-11),
     };
   }
 

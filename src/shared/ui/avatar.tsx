@@ -29,20 +29,27 @@ const getInitials = (title: string): string =>
 export interface AvatarProps {
   id: string;
   title: string;
+  src?: string;
   className?: string;
 }
 
-export const Avatar = ({ id, title, className }: AvatarProps) => {
+export const Avatar = ({ id, title, src, className }: AvatarProps) => {
   const initials = getInitials(title);
   return (
     <span
       className={cn(
-        "inline-flex size-12 shrink-0 select-none items-center justify-center rounded-full bg-gradient-to-br text-[15px] font-semibold text-white",
+        "relative inline-flex size-12 shrink-0 select-none items-center justify-center overflow-hidden rounded-full bg-gradient-to-br text-[15px] font-semibold text-white",
         gradients[hashId(id) % gradients.length],
         className,
       )}
     >
-      {initials ? initials : <IconUser className="size-5 opacity-90" />}
+      {src ? (
+        <img src={src} alt="" className="absolute inset-0 size-full object-cover" />
+      ) : initials ? (
+        initials
+      ) : (
+        <IconUser className="size-5 opacity-90" />
+      )}
     </span>
   );
 };

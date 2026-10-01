@@ -20,12 +20,19 @@ export type Message = z.infer<typeof MessageSchema>;
 
 // ── Chat ─────────────────────────────────────────────────────────────────────
 
+export const ChatContactSchema = z.object({
+  name: z.string(),
+  avatar: z.string().optional(),
+});
+
 export const ChatSchema = z.object({
   id: z.string(),
   title: z.string(),
   createdAt: z.number(),
+  contact: ChatContactSchema.optional(),
 });
 
+export type ChatContact = z.infer<typeof ChatContactSchema>;
 export type Chat = z.infer<typeof ChatSchema>;
 
 // ── StoredChats ───────────────────────────────────────────────────────────────

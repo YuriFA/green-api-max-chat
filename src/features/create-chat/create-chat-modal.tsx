@@ -13,6 +13,7 @@ import { IconClose } from "@/shared/ui/icons";
 import { Spinner } from "@/shared/ui/spinner";
 
 import { createChatSchema, type CreateChatValues } from "./create-chat-schema";
+import { fetchChatContact } from "./chat-contact";
 
 interface CreateChatModalProps {
   onClose: () => void;
@@ -52,6 +53,7 @@ export const CreateChatModal = ({ onClose }: CreateChatModalProps) => {
       createChat({
         id: outcome.chatId,
         title: formatPhone(parsed.value),
+        contact: await fetchChatContact(client, outcome.chatId),
       });
       onClose();
     } catch (error) {

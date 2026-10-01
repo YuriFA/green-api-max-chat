@@ -3,6 +3,8 @@ import type {
   CheckAccountOutcome,
   CheckAccountRequest,
   DeleteNotificationResponse,
+  GetContactInfoRequest,
+  GetContactInfoResponse,
   GreenApiCredentials,
   ReceiveNotificationResponse,
   SendMessageRequest,
@@ -24,6 +26,7 @@ type FetchFn = (url: string, init: RequestInit) => Promise<Response>;
 export interface GreenApiClient {
   sendMessage(request: SendMessageRequest): Promise<SendMessageResponse>;
   checkAccount(request: CheckAccountRequest): Promise<CheckAccountOutcome>;
+  getContactInfo(request: GetContactInfoRequest): Promise<GetContactInfoResponse>;
   receiveNotification(
     receiveTimeoutSeconds: number,
     signal?: AbortSignal,
@@ -91,6 +94,14 @@ export class HttpGreenApiClient implements GreenApiClient {
       kind: "unavailable",
       reason: response.reason ?? "HTTP-ответ без статуса аккаунта",
     };
+  }
+
+  async getContactInfo(request: GetContactInfoRequest): Promise<GetContactInfoResponse> {
+    return this.request<GetContactInfoResponse>("getContactInfo", {
+      method: "POST",
+      headers: JSON_HEADERS,
+      body: JSON.stringify(request),
+    });
   }
 
   async receiveNotification(

@@ -34,6 +34,7 @@ const makeClient = (receive: GreenApiClient["receiveNotification"]): GreenApiCli
   deleteNotification: vi.fn().mockResolvedValue({ result: true, reason: "" }),
   sendMessage: vi.fn().mockResolvedValue({ idMessage: "x" }),
   checkAccount: vi.fn().mockResolvedValue({ kind: "not-found" }),
+  getContactInfo: vi.fn().mockResolvedValue({}),
 });
 
 const wrap =

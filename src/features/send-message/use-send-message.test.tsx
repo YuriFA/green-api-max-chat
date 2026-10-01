@@ -16,6 +16,7 @@ const createClientStub = (
   receiveNotification: vi.fn().mockResolvedValue(null),
   deleteNotification: vi.fn().mockResolvedValue({ result: true, reason: "" }),
   checkAccount: vi.fn().mockResolvedValue({ kind: "not-found" }),
+  getContactInfo: vi.fn().mockResolvedValue({}),
 });
 
 const makeWrapper =
