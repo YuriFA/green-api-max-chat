@@ -2,6 +2,8 @@
 
 Прототип веб-чата для мессенджера MAX на базе [GREEN-API](https://green-api.com/max)
 
+Демо: <https://yurifa.github.io/green-api-max-chat>
+
 ## Стек
 
 - Vite + React 19 + TypeScript
@@ -19,4 +21,3 @@ pnpm dev
 ```
 
 Откройте <http://localhost:5173>.
-
